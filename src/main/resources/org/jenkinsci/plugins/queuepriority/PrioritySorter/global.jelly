@@ -1,0 +1,31 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
+	xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+	<f:section title="Projects priorities">
+		<f:entry>
+			<j:set var="cnt" value="0" />
+			<f:repeatable field="priorityCategories">
+				<j:invokeStatic var="descriptors"
+					className="org.jenkinsci.plugins.queuepriority.PriorityCategory"
+					method="all" />
+				<j:set var="instance" value="${instance.category}" />
+				<table width="100%">
+					<div>
+					<j:forEach var="descriptor" items="${descriptors}">
+						<st:include page="${descriptor.configPage}" from="${descriptor}" />
+					</j:forEach>
+					<f:entry>
+						<div align="left">
+							<f:repeatableDeleteButton />
+						</div>
+					</f:entry>
+					</div>
+				</table>
+			</f:repeatable>
+		</f:entry>
+		<f:advanced>
+			<f:entry title="Groovy sorter script" field="sorterScript">
+				<f:textarea />
+			</f:entry>
+		</f:advanced>
+	</f:section>
+</j:jelly>
